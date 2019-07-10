@@ -13,12 +13,6 @@ Clientdiscord = discord.Client()
 
 
 @client.event
-async def on_member_join(member):
-    print('Recognised that a member called ' + member.name + ' joined')
-    await client.send_message(member, 'Vitaj Na Oficiálnom game Brothers Discorde! Nezapomeň se podívat na náš web https://gbrothers.pageride.sk')
-    print('Sent message to ' + member.name)
-
-@client.event
 async def on_ready():
     await client.change_presence(game=Game(name='?help '))
     print('Ready, Freddy')
