@@ -1,47 +1,73 @@
-# These are the dependecies. The bot depends on these to function, hence the name. Please do not change these unless your adding to them, because they can break the bot.
 import discord
-import asyncio
 from discord.ext.commands import Bot
 from discord.ext import commands
-import platform
+import asyncio
+import time
+import random
+from discord import Game
 
-# Here you can modify the bot's prefix and description and wether it sends help in direct messages or not.
-client = Bot(description="Basic Bot by Habchy#1665", command_prefix="PUT YOUR PREFIX HERE", pm_help = False)
 
-# This is what happens everytime the bot launches. In this case, it prints information like server count, user count the bot is connected to, and the bot id in the console.
-# Do not mess with it because the bot can break, if you wish to do so, please consult me or someone trusted.
+Client = discord.client
+client = commands.Bot(command_prefix = '!')
+Clientdiscord = discord.Client()
+
+@client.event
+async def on_member_join(member):
+    print('Recognised that a member called ' + member.name + ' joined')
+    await client.send_message(member, 'Vitaj Na Oficiálnom game Brothers Discorde! Nezapomeň se podívat na náš web https://gbrothers.pageride.sk')
+    print('Sent message to ' + member.name)
+
 @client.event
 async def on_ready():
-	print('Logged in as '+client.user.name+' (ID:'+client.user.id+') | Connected to '+str(len(client.servers))+' servers | Connected to '+str(len(set(client.get_all_members())))+' users')
-	print('--------')
-	print('Current Discord.py Version: {} | Current Python Version: {}'.format(discord.__version__, platform.python_version()))
-	print('--------')
-	print('Use this link to invite {}:'.format(client.user.name))
-	print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(client.user.id))
-	print('--------')
-	print('Support Discord Server: https://discord.gg/FNNNgqb')
-	print('Github Link: https://github.com/Habchy/BasicBot')
-	print('--------')
-	print('You are running BasicBot v2.1') #Do not change this. This will really help us support you, if you need support.
-	print('Created by Habchy#1665')
-	return await client.change_presence(game=discord.Game(name='LoL')) #This is buggy, let us know if it doesn't work.
+    await client.change_presence(game=Game(name='?help '))
+    print('Ready, Freddy')
 
-# This is a basic example of a call and response command. You tell it do "this" and it does it.
-@client.command()
-async def ping(*args):
 
-	await client.say(":ping_pong: Pong!")
-	await asyncio.sleep(3)
-	await client.say(":warning: This bot was created by **Habchy#1665**, it seems that you have not modified it yet. Go edit the file and try it out!")
-# After you have modified the code, feel free to delete the line above so it does not keep popping up everytime you initiate the ping commmand.
-	
-client.run('NTg3Njk5ODk3MjYwODM0ODE2.XSYbnw.to2sqD4wrsOxwABHHGX1k2I4J0Y')
+async def on_message(message):
+    author = message.author
+    content = message.content
+    print('{}: {}'.format(author, content))
 
-# Basic Bot was created by Habchy#1665
-# Please join this Discord server if you need help: https://discord.gg/FNNNgqb
-# Please modify the parts of the code where it asks you to. Example: The Prefix or The Bot Token
-# This is by no means a full bot, it's more of a starter to show you what the python language can do in Discord.
-# Thank you for using this and don't forget to star my repo on GitHub! [Repo Link: https://github.com/Habchy/BasicBot]
+@client.event
+async def on_message(message):
+    if message.content == '?logic':
+        em = discord.Embed(description='Use Brain')
+        em.set_image(url='https://cdn.discordapp.com/attachments/528194410924605440/528194517057142785/47233415_1947358465380762_8843273057565933568_n.png')
+        await client.send_message(message.channel, embed=em)
+    if message.content == '?cheers':
+        em = discord.Embed(description='Cheers')
+        em.set_image(url='https://cdn.discordapp.com/attachments/528194410924605440/529441936323510273/download_1.jpg')
+        await client.send_message(message.channel, embed=em)
+    if ('kokot') in message.content:
+       await client.delete_message(message)
+    if ('piča') in message.content:
+       await client.delete_message(message)
+    if ('kurva') in message.content:
+       await client.delete_message(message)
+    if message.content.startswith('?coinflip'):
+        randomlist = ["head","tail",]
+        await client.send_message(message.channel,(random.choice(randomlist)))
+    if message.content == '?help':
+        await client.send_message(message.channel,',?príkazy')
+    if message.content == '?príkazy':
+        await client.send_message(message.channel,'?logic, ?coinflip, ?pingme, ?clan, ?tclan, ?pravidlá, ?support, ?royaleapi -viac príkazov príde v budúcnosti')
+    if message.content.startswith('?pingme'):
+        await client.send_message(message.channel,'Ahoj, <@%s>'  %(message.author.id))
+    if message.content == '?clan':
+        await client.send_message(message.channel,'https://link.clashroyale.com/invite/clan/en?tag=8V2CUQLU&token=ys6j6zye&platform=android')
+    if message.content == '?tclan':
+        await client.send_message(message.channel,'https://link.clashroyale.com/invite/clan/en?tag=PUUVJQYJ&token=hhxh8reh&platform=android')
+    if message.content == '?pravidlá':
+        await client.send_message(message.channel,'https://gbrothers.pageride.sk/turnaj/')
+    if message.content == '?support':
+        await client.send_message(message.channel,'Jestli potřebuješ pomoc di do roomky #support. Při dúležitém problému označ @DurlaX88#8390 nebo @VANEKNIFE#1689.')
+    if message.content == '?royaleapi':
+        await client.send_message(message.channel,'https://royaleapi.com/clan/8V2CUQLU')
 
-# The help command is currently set to be not be Direct Messaged.
-# If you would like to change that, change "pm_help = False" to "pm_help = True" on line 9.
+async def on_message(message):
+    author = message.author
+    content = message.content
+    print('{}: {}'.format(author, content))
+
+
+client.run('NTg3Njk5ODk3MjYwODM0ODE2.XSYbnw.to2sqD4wrsOxwABHHGX1k2I4J0Y'
